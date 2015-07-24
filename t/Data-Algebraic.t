@@ -8,7 +8,8 @@ BEGIN {
 }
 
 subtest 'Numeral' => sub {
-  package t::Enum::Basic {
+  {
+    package t::Enum::Basic;
     use strict;
     use warnings;
     use Data::Algebraic qw( Left Right );
@@ -30,7 +31,8 @@ subtest 'Numeral' => sub {
 };
 
 subtest 'Numeral (with offset)' => sub {
-  package t::Enum::WithOffset {
+  {
+    package t::Enum::WithOffset;
     use strict;
     use warnings;
     use Data::Algebraic (
@@ -44,7 +46,8 @@ subtest 'Numeral (with offset)' => sub {
 };
 
 subtest 'Eq' => sub {
-  package t::Bool {
+  {
+    package t::Bool;
     use strict;
     use warnings;
     use Data::Algebraic (

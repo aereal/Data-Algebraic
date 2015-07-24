@@ -1,14 +1,14 @@
 # NAME
 
-Data::Enum - It's new $module
+Data::Algebraic - It's new $module
 
 # SYNOPSIS
 
-    use Data::Enum;
+    use Data::Algebraic;
 
 # DESCRIPTION
 
-Data::Enum is ...
+Data::Algebraic is ...
 
 # LICENSE
 

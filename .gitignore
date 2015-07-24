@@ -28,5 +28,5 @@ cover_db/
 
 MYMETA.*
 
-/Data-Enum-*
+/Data-Algebraic-*
 cpanfile.snapshot

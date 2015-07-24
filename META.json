@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Data-Enum",
+   "name" : "Data-Algebraic",
    "no_index" : {
       "directory" : [
          "t",
@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Scalar::Util" : "0",
             "perl" : "5.008001"
          }
       },
@@ -52,5 +53,16 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/aereal/Data-Algebraic/issues"
+      },
+      "homepage" : "https://github.com/aereal/Data-Algebraic",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/aereal/Data-Algebraic.git",
+         "web" : "https://github.com/aereal/Data-Algebraic"
+      }
+   },
    "version" : "0.01"
 }

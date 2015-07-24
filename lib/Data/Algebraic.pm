@@ -25,15 +25,28 @@ __END__
 
 =head1 NAME
 
-Data::Algebraic - It's new $module
+Data::Algebraic - Algebraic data for Perl
 
 =head1 SYNOPSIS
 
-    use Data::Algebraic;
+    package Boolean;
+    use Data::Algebraic -derived => [qw( Eq )], qw( True False );
+
+    package main;
+    use Boolean;
+
+    # subroutine named as given names returns a instance of a defined type
+    ref(Boolean::True); # => Boolean
+
+    # equality
+    Boolean::True->is(Boolean::True); # => 1
+    Boolean::True->is_true; # => 1
+    Boolean::True->is_false; # => 0
 
 =head1 DESCRIPTION
 
-Data::Algebraic is ...
+L<Data::Algebraic> provides some essential Algebraic data type implementations and
+additional features such as a equality.
 
 =head1 LICENSE
 

@@ -33,8 +33,9 @@ sub install {
   Data::Enum::Util::Accessor::define_ro_accessor($self->entity_class, 'name');
   Data::Enum::Util::Accessor::define_ro_accessor($self->entity_class, 'value');
 
-  my $values = $self->define_values();
-  my $values_by_raw_value = { map { ($_->value => $_) } @$values };
+  $self->define_values();
+  my $values_by_raw_value = $self->{defined_values_by_raw_value};
+  my $values = [ values %$values_by_raw_value ];
 
   Data::Enum::Util::Accessor::define_sub($self->entity_class, 'is', sub {
     my ($self, $other) = @_;
@@ -47,6 +48,11 @@ sub install {
   });
 
   Data::Enum::Util::Accessor::define_scalar_var($self->entity_class, 'VALUES', $values);
+}
+
+sub define_value {
+  my ($self, $value) = @_;
+  ($self->{defined_values_by_raw_value} //= {})->{$value->value} = $value;
 }
 
 1;

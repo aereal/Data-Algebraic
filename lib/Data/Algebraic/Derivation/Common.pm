@@ -47,7 +47,7 @@ sub define {
     $values_by_raw_value->{$value};
   });
 
-  Data::Algebraic::Util::Accessor::define_scalar_var($self->entity_class, 'VALUES', $values);
+  Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'values', sub { $values });
 }
 
 sub define_value {

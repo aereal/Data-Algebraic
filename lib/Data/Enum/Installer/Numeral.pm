@@ -10,7 +10,7 @@ sub parse {
   my $options = {};
   while (@args) {
     my $k = $args[0];
-    last unless $k =~ m/\A-/;
+    last unless $k =~ s/\A-//;
     shift @args;
     my $v = shift @args;
     $options->{$k} = $v;
@@ -26,7 +26,7 @@ sub parse {
 
 sub names { return $_[0]->{names} }
 
-sub from { return $_[0]->{-from} }
+sub from { return $_[0]->{from} }
 
 sub install {
   my ($self, $implement_class) = @_;

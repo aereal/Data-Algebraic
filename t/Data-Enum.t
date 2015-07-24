@@ -26,6 +26,9 @@ subtest 'Numeral' => sub {
   ok !t::Enum::Basic::Left->is_right;
   ok !t::Enum::Basic::Right->is_left;
   ok +t::Enum::Basic::Right->is_right;
+
+  ok +t::Enum::Basic->from(t::Enum::Basic::Left->value)->is(t::Enum::Basic::Left);
+  ok +t::Enum::Basic->from(t::Enum::Basic::Right->value)->is(t::Enum::Basic::Right);
 };
 
 subtest 'Numeral (with offset)' => sub {

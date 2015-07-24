@@ -29,10 +29,10 @@ sub install {
   _inject_ro_accessor($injected_class, 'value');
 
   my $from = $options->{-from} // 1;
-  my $values = [];
+  my $values_by_name = {};
   for my $name (@$names) {
     my $v = _define($injected_class, $name, $from);
-    push @$values, $v;
+    $values_by_name->{$v->value} = $v;
     _inject_sub($injected_class, $name, sub { $v });
     my $predicate_name = sprintf 'is_%s', lc $name;
     _inject_sub($injected_class, $predicate_name, sub { $_[0]->is($v) });
@@ -44,7 +44,12 @@ sub install {
     $self->value == $other->value;
   });
 
-  _inject_var($injected_class, 'VALUES', $values);
+  _inject_sub($injected_class, 'from', sub {
+    my ($class, $value) = @_;
+    $values_by_name->{$value};
+  });
+
+  _inject_var($injected_class, 'VALUES', [ values %$values_by_name ]);
 }
 
 sub _define {

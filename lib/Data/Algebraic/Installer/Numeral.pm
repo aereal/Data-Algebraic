@@ -1,11 +1,11 @@
-package Data::Enum::Installer::Numeral;
+package Data::Algebraic::Installer::Numeral;
 use strict;
 use warnings;
-use parent qw( Data::Enum::Installer::Common );
+use parent qw(Data::Algebraic::Installer::Common);
 
-use Data::Enum::Util::Accessor;
+use Data::Algebraic::Util::Accessor;
 
-Data::Enum::Util::Accessor::define_ro_accessor(__PACKAGE__, 'from');
+Data::Algebraic::Util::Accessor::define_ro_accessor(__PACKAGE__, 'from');
 
 sub define_values {
   my ($self) = @_;
@@ -14,7 +14,7 @@ sub define_values {
   for my $name (@{ $self->names }) {
     my $v = $self->create_value(name => $name, value => $ordinal);
     $self->define_value($v);
-    Data::Enum::Util::Accessor::define_sub($self->entity_class, $name, sub { $v });
+    Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $name, sub { $v });
     $ordinal++;
   }
 }

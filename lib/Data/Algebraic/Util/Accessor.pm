@@ -1,4 +1,4 @@
-package Data::Enum::Util::Accessor;
+package Data::Algebraic::Util::Accessor;
 use strict;
 use warnings;
 

@@ -4,14 +4,14 @@ use warnings;
 use Test::More;
 
 BEGIN {
-  require_ok 'Data::Enum';
+  require_ok 'Data::Algebraic';
 }
 
 subtest 'Numeral' => sub {
   package t::Enum::Basic {
     use strict;
     use warnings;
-    use Data::Enum qw( Left Right );
+    use Data::Algebraic qw( Left Right );
   };
 
   isa_ok +t::Enum::Basic::Left, 't::Enum::Basic';
@@ -35,7 +35,7 @@ subtest 'Numeral (with offset)' => sub {
   package t::Enum::WithOffset {
     use strict;
     use warnings;
-    use Data::Enum (
+    use Data::Algebraic (
       -from => 10,
       qw( Left Right )
     );

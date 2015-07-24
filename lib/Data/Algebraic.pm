@@ -1,9 +1,9 @@
-package Data::Enum;
+package Data::Algebraic;
 use 5.008001;
 use strict;
 use warnings;
 
-use Data::Enum::Installer::Numeral;
+use Data::Algebraic::Installer::Numeral;
 
 our $VERSION = "0.01";
 
@@ -11,7 +11,7 @@ sub import {
   my ($class, @args) = @_;
   my ($importer) = caller();
 
-  my $installer = Data::Enum::Installer::Numeral->parse(
+  my $installer = Data::Algebraic::Installer::Numeral->parse(
     -entity_class => $importer,
     @args
   );
@@ -25,15 +25,15 @@ __END__
 
 =head1 NAME
 
-Data::Enum - It's new $module
+Data::Algebraic - It's new $module
 
 =head1 SYNOPSIS
 
-    use Data::Enum;
+    use Data::Algebraic;
 
 =head1 DESCRIPTION
 
-Data::Enum is ...
+Data::Algebraic is ...
 
 =head1 LICENSE
 

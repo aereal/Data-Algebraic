@@ -2,6 +2,8 @@ package Data::Enum::Installer::Numeral;
 use strict;
 use warnings;
 
+use Data::Enum::Util::Accessor;
+
 sub parse {
   my ($class, @args) = @_;
 
@@ -29,31 +31,31 @@ sub from { return $_[0]->{-from} }
 sub install {
   my ($self, $implement_class) = @_;
 
-  _inject_ro_accessor($implement_class, 'name');
-  _inject_ro_accessor($implement_class, 'value');
+  Data::Enum::Util::Accessor::define_ro_accessor($implement_class, 'name');
+  Data::Enum::Util::Accessor::define_ro_accessor($implement_class, 'value');
 
   my $from = $self->from // 1;
   my $values_by_name = {};
   for my $name (@{ $self->names }) {
     my $v = _define($implement_class, $name, $from);
     $values_by_name->{$v->value} = $v;
-    _inject_sub($implement_class, $name, sub { $v });
+    Data::Enum::Util::Accessor::define_sub($implement_class, $name, sub { $v });
     my $predicate_name = sprintf 'is_%s', lc $name;
-    _inject_sub($implement_class, $predicate_name, sub { $_[0]->is($v) });
+    Data::Enum::Util::Accessor::define_sub($implement_class, $predicate_name, sub { $_[0]->is($v) });
     $from++;
   }
 
-  _inject_sub($implement_class, 'is', sub {
+  Data::Enum::Util::Accessor::define_sub($implement_class, 'is', sub {
     my ($self, $other) = @_;
     $self->value == $other->value;
   });
 
-  _inject_sub($implement_class, 'from', sub {
+  Data::Enum::Util::Accessor::define_sub($implement_class, 'from', sub {
     my ($class, $value) = @_;
     $values_by_name->{$value};
   });
 
-  _inject_var($implement_class, 'VALUES', [ values %$values_by_name ]);
+  Data::Enum::Util::Accessor::define_scalar_var($implement_class, 'VALUES', [ values %$values_by_name ]);
 }
 
 sub _define {
@@ -62,29 +64,6 @@ sub _define {
     name  => $name,
     value => $value,
   }, $injected_class;
-}
-
-sub _inject_ro_accessor {
-  my($dest_class, $name) = @_;
-
-  _inject_sub($dest_class, $name, sub { $_[0]->{$name} });
-}
-
-sub _inject_sub {
-  my ($dest_class, $name, $value) = @_;
-  my $qualified_name = join '::', $dest_class, $name;
-
-  no strict 'refs';
-  *{ $qualified_name } = $value;
-}
-
-sub _inject_var {
-  my ($dest_class, $name, $value) = @_;
-  my $qualified_name = join '::', $dest_class, $name;
-
-  no strict 'refs';
-  no warnings 'once';
-  ${ $qualified_name } = $value;
 }
 
 1;

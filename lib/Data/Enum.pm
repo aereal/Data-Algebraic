@@ -11,7 +11,10 @@ sub import {
   my ($class, @args) = @_;
   my ($importer) = caller();
 
-  my $installer = Data::Enum::Installer::Numeral->parse(@args);
+  my $installer = Data::Enum::Installer::Numeral->parse(
+    -entity_class => $importer,
+    @args
+  );
   $installer->install($importer);
 }
 

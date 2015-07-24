@@ -16,21 +16,25 @@ sub install {
   my ($class, $injected_class, $names) = @_;
 
   _inject_ro_accessor($injected_class, 'name');
+  _inject_ro_accessor($injected_class, 'value');
 
+  my $from = 1;
   my $values = [];
   for my $name (@$names) {
-    my $v = _define($injected_class, $name);
+    my $v = _define($injected_class, $name, $from);
     push @$values, $v;
     _inject_sub($injected_class, $name, sub { $v });
+    $from++;
   }
 
   _inject_var($injected_class, 'VALUES', $values);
 }
 
 sub _define {
-  my ($injected_class, $name) = @_;
+  my ($injected_class, $name, $value) = @_;
   return bless {
-    name => $name,
+    name  => $name,
+    value => $value,
   }, $injected_class;
 }
 

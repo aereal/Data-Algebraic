@@ -18,6 +18,8 @@ subtest 'Numeral' => sub {
   isa_ok +t::Enum_1::Right, 't::Enum_1';
   is +t::Enum_1::Left->name, 'Left';
   is +t::Enum_1::Right->name, 'Right';
+  is +t::Enum_1::Left->value, 1;
+  is +t::Enum_1::Right->value, 2;
 };
 
 done_testing;

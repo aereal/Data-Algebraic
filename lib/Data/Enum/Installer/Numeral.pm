@@ -4,6 +4,9 @@ use warnings;
 
 use Data::Enum::Util::Accessor;
 
+Data::Enum::Util::Accessor::define_ro_accessor(__PACKAGE__, 'names');
+Data::Enum::Util::Accessor::define_ro_accessor(__PACKAGE__, 'from');
+
 sub parse {
   my ($class, @args) = @_;
 
@@ -23,10 +26,6 @@ sub parse {
   }, $class;
   return $self;
 }
-
-sub names { return $_[0]->{names} }
-
-sub from { return $_[0]->{from} }
 
 sub install {
   my ($self, $implement_class) = @_;

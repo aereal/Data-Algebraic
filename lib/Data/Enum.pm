@@ -27,6 +27,11 @@ sub install {
     $from++;
   }
 
+  _inject_sub($injected_class, 'is', sub {
+    my ($self, $other) = @_;
+    $self->value == $other->value;
+  });
+
   _inject_var($injected_class, 'VALUES', $values);
 }
 

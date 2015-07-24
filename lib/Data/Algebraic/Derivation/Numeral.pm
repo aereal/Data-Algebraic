@@ -28,3 +28,15 @@ sub create_value {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+Data::Algebraic::Derivation::Numeral
+
+=head1 DESCRIPTION
+
+L<Data::Algebraic::Derivation::Numeral> creates instance data that based on ordinary numbers.
+
+=cut

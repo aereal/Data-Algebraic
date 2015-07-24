@@ -22,6 +22,10 @@ subtest 'Numeral' => sub {
   is +t::Enum_1::Right->value, 2;
   ok +t::Enum_1::Left->is(t::Enum_1::Left);
   ok +t::Enum_1::Right->is(t::Enum_1::Right);
+  ok +t::Enum_1::Left->is_left;
+  ok !t::Enum_1::Left->is_right;
+  ok !t::Enum_1::Right->is_left;
+  ok +t::Enum_1::Right->is_right;
 };
 
 done_testing;

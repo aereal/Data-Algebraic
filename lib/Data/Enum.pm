@@ -24,6 +24,8 @@ sub install {
     my $v = _define($injected_class, $name, $from);
     push @$values, $v;
     _inject_sub($injected_class, $name, sub { $v });
+    my $predicate_name = sprintf 'is_%s', lc $name;
+    _inject_sub($injected_class, $predicate_name, sub { $_[0]->is($v) });
     $from++;
   }
 

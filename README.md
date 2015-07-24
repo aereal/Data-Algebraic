@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/aereal/Data-Algebraic.svg?branch=master)](https://travis-ci.org/aereal/Data-Algebraic)
 # NAME
 
 Data::Algebraic - It's new $module

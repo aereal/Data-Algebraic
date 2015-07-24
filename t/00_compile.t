@@ -1,9 +1,9 @@
 use strict;
-use Test::More 0.98;
+use Test::More ();
 
-use_ok $_ for qw(
+Test::More::use_ok $_ for qw(
     Data::Algebraic
 );
 
-done_testing;
+Test::More::done_testing;
 

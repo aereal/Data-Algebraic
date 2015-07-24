@@ -3,84 +3,16 @@ use 5.008001;
 use strict;
 use warnings;
 
+use Data::Enum::Installer::Numeral;
+
 our $VERSION = "0.01";
 
 sub import {
   my ($class, @args) = @_;
   my ($importer) = caller();
 
-  my $options = {};
-  while (@args) {
-    my $k = $args[0];
-    last unless $k =~ m/\A-/;
-    shift @args;
-    my $v = shift @args;
-    $options->{$k} = $v;
-  }
-  my $names = \@args;
-
-  $class->install($importer, $names, $options);
-}
-
-sub install {
-  my ($class, $injected_class, $names, $options) = @_;
-
-  _inject_ro_accessor($injected_class, 'name');
-  _inject_ro_accessor($injected_class, 'value');
-
-  my $from = $options->{-from} // 1;
-  my $values_by_name = {};
-  for my $name (@$names) {
-    my $v = _define($injected_class, $name, $from);
-    $values_by_name->{$v->value} = $v;
-    _inject_sub($injected_class, $name, sub { $v });
-    my $predicate_name = sprintf 'is_%s', lc $name;
-    _inject_sub($injected_class, $predicate_name, sub { $_[0]->is($v) });
-    $from++;
-  }
-
-  _inject_sub($injected_class, 'is', sub {
-    my ($self, $other) = @_;
-    $self->value == $other->value;
-  });
-
-  _inject_sub($injected_class, 'from', sub {
-    my ($class, $value) = @_;
-    $values_by_name->{$value};
-  });
-
-  _inject_var($injected_class, 'VALUES', [ values %$values_by_name ]);
-}
-
-sub _define {
-  my ($injected_class, $name, $value) = @_;
-  return bless {
-    name  => $name,
-    value => $value,
-  }, $injected_class;
-}
-
-sub _inject_ro_accessor {
-  my($dest_class, $name) = @_;
-
-  _inject_sub($dest_class, $name, sub { $_[0]->{$name} });
-}
-
-sub _inject_sub {
-  my ($dest_class, $name, $value) = @_;
-  my $qualified_name = join '::', $dest_class, $name;
-
-  no strict 'refs';
-  *{ $qualified_name } = $value;
-}
-
-sub _inject_var {
-  my ($dest_class, $name, $value) = @_;
-  my $qualified_name = join '::', $dest_class, $name;
-
-  no strict 'refs';
-  no warnings 'once';
-  ${ $qualified_name } = $value;
+  my $installer = Data::Enum::Installer::Numeral->parse(@args);
+  $installer->install($importer);
 }
 
 1;

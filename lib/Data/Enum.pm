@@ -5,7 +5,57 @@ use warnings;
 
 our $VERSION = "0.01";
 
+sub import {
+  my ($class, @args) = @_;
+  my ($importer) = caller();
+  my $names = \@args; # TODO
+  $class->install($importer, $names);
+}
 
+sub install {
+  my ($class, $injected_class, $names) = @_;
+
+  _inject_ro_accessor($injected_class, 'name');
+
+  my $values = [];
+  for my $name (@$names) {
+    my $v = _define($injected_class, $name);
+    push @$values, $v;
+    _inject_sub($injected_class, $name, sub { $v });
+  }
+
+  _inject_var($injected_class, 'VALUES', $values);
+}
+
+sub _define {
+  my ($injected_class, $name) = @_;
+  return bless {
+    name => $name,
+  }, $injected_class;
+}
+
+sub _inject_ro_accessor {
+  my($dest_class, $name) = @_;
+
+  _inject_sub($dest_class, $name, sub { $_[0]->{$name} });
+}
+
+sub _inject_sub {
+  my ($dest_class, $name, $value) = @_;
+  my $qualified_name = join '::', $dest_class, $name;
+
+  no strict 'refs';
+  *{ $qualified_name } = $value;
+}
+
+sub _inject_var {
+  my ($dest_class, $name, $value) = @_;
+  my $qualified_name = join '::', $dest_class, $name;
+
+  no strict 'refs';
+  no warnings 'once';
+  ${ $qualified_name } = $value;
+}
 
 1;
 __END__

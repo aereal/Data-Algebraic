@@ -8,17 +8,27 @@ our $VERSION = "0.01";
 sub import {
   my ($class, @args) = @_;
   my ($importer) = caller();
-  my $names = \@args; # TODO
-  $class->install($importer, $names);
+
+  my $options = {};
+  while (@args) {
+    my $k = $args[0];
+    last unless $k =~ m/\A-/;
+    shift @args;
+    my $v = shift @args;
+    $options->{$k} = $v;
+  }
+  my $names = \@args;
+
+  $class->install($importer, $names, $options);
 }
 
 sub install {
-  my ($class, $injected_class, $names) = @_;
+  my ($class, $injected_class, $names, $options) = @_;
 
   _inject_ro_accessor($injected_class, 'name');
   _inject_ro_accessor($injected_class, 'value');
 
-  my $from = 1;
+  my $from = $options->{-from} // 1;
   my $values = [];
   for my $name (@$names) {
     my $v = _define($injected_class, $name, $from);

@@ -28,4 +28,18 @@ subtest 'Numeral' => sub {
   ok +t::Enum::Basic::Right->is_right;
 };
 
+subtest 'Numeral (with offset)' => sub {
+  package t::Enum::WithOffset {
+    use strict;
+    use warnings;
+    use Data::Enum (
+      -from => 10,
+      qw( Left Right )
+    );
+  };
+
+  is +t::Enum::WithOffset::Left->value, 10;
+  is +t::Enum::WithOffset::Right->value, 11;
+};
+
 done_testing;

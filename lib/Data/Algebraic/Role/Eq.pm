@@ -9,7 +9,7 @@ sub assumes {
 
   Data::Algebraic::Util::Accessor::define_sub($entity_class, 'is', sub {
     my ($self, $other) = @_;
-    $self->value == $other->value;
+    $self->raw == $other->raw;
   });
 
   for my $value (@{ $entity_class->values }) {

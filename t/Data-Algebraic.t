@@ -18,11 +18,11 @@ subtest 'Numeral' => sub {
   isa_ok +t::Enum::Basic::Right, 't::Enum::Basic';
   is +t::Enum::Basic::Left->name, 'Left';
   is +t::Enum::Basic::Right->name, 'Right';
-  is +t::Enum::Basic::Left->value, 1;
-  is +t::Enum::Basic::Right->value, 2;
+  is +t::Enum::Basic::Left->raw, 1;
+  is +t::Enum::Basic::Right->raw, 2;
 
-  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Left->value), t::Enum::Basic::Left;
-  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Right->value), t::Enum::Basic::Right;
+  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Left->raw), t::Enum::Basic::Left;
+  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Right->raw), t::Enum::Basic::Right;
   is_deeply +t::Enum::Basic->values, [
     t::Enum::Basic::Left,
     t::Enum::Basic::Right,
@@ -39,8 +39,8 @@ subtest 'Numeral (with offset)' => sub {
     );
   };
 
-  is +t::Enum::WithOffset::Left->value, 10;
-  is +t::Enum::WithOffset::Right->value, 11;
+  is +t::Enum::WithOffset::Left->raw, 10;
+  is +t::Enum::WithOffset::Right->raw, 11;
 };
 
 subtest 'Eq' => sub {

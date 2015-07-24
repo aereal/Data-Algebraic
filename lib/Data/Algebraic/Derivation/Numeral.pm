@@ -13,7 +13,7 @@ sub define_values {
   my @values;
   my $ordinal = $self->from // 1;
   for my $name (@{ $self->names }) {
-    my $v = $self->create_value(name => $name, value => $ordinal);
+    my $v = $self->create_value(name => $name, raw => $ordinal);
     push @values, $v;
     Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $name, sub { $v });
     $ordinal++;

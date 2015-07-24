@@ -33,14 +33,14 @@ sub define {
   my ($self) = @_;
 
   Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'name');
-  Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'value');
+  Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'raw');
 
   my $values = $self->define_values();
-  my $values_by_raw_value = { map { ($_->value, $_) } @$values };
+  my $values_by_raw = { map { ($_->raw, $_) } @$values };
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'from', sub {
     my ($class, $value) = @_;
-    $values_by_raw_value->{$value};
+    $values_by_raw->{$value};
   });
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'values', sub { $values });

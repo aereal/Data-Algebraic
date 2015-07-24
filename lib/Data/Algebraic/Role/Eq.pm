@@ -2,6 +2,8 @@ package Data::Algebraic::Role::Eq;
 use strict;
 use warnings;
 
+use Scalar::Util qw( blessed );
+
 use Data::Algebraic::Util::Accessor;
 
 sub assumes {
@@ -9,7 +11,7 @@ sub assumes {
 
   Data::Algebraic::Util::Accessor::define_sub($entity_class, 'is', sub {
     my ($self, $other) = @_;
-    $self->raw == $other->raw;
+    blessed($other) && $other->isa(ref($self)) && $self->raw == $other->raw;
   });
 
   for my $value (@{ $entity_class->values }) {

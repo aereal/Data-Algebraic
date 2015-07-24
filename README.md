@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/aereal/Data-Algebraic.svg?branch=master)](https://travis-ci.org/aereal/Data-Algebraic)
+[![Build Status](https://travis-ci.org/aereal/Data-Algebraic.svg?branch=master)](https://travis-ci.org/aereal/Data-Algebraic) [![Coverage Status](https://img.shields.io/coveralls/aereal/Data-Algebraic/master.svg?style=flat)](https://coveralls.io/r/aereal/Data-Algebraic?branch=master)
 # NAME
 
 Data::Algebraic - It's new $module

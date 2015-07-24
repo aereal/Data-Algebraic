@@ -1,0 +1,4 @@
+name = "Data-Enum"
+# badges = ["travis"]
+module_maker="ModuleBuildTiny"
+

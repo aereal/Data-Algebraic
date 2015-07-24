@@ -9,3 +9,11 @@ perl:
 cache:
   directories:
     - local
+
+install:
+  - which carton || cpanm --notest Carton
+  - which minil || cpanm --notest Minilla
+  - carton install
+
+script:
+  - minil test

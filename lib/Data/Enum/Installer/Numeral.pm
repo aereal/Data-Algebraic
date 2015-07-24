@@ -37,7 +37,7 @@ sub install {
   my $from = $self->from // 1;
   my $values_by_name = {};
   for my $name (@{ $self->names }) {
-    my $v = _create_instance($self->entity_class, $name, $from);
+    my $v = $self->create_value(name => $name, value => $from);
     $values_by_name->{$v->value} = $v;
     Data::Enum::Util::Accessor::define_sub($self->entity_class, $name, sub { $v });
     my $predicate_name = sprintf 'is_%s', lc $name;
@@ -58,12 +58,9 @@ sub install {
   Data::Enum::Util::Accessor::define_scalar_var($self->entity_class, 'VALUES', [ values %$values_by_name ]);
 }
 
-sub _create_instance {
-  my ($injected_class, $name, $value) = @_;
-  return bless {
-    name  => $name,
-    value => $value,
-  }, $injected_class;
+sub create_value {
+  my ($self, %args) = @_;
+  return bless \%args, $self->entity_class;
 }
 
 1;

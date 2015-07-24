@@ -1,0 +1,35 @@
+=encoding utf-8
+
+=head1 NAME
+
+Data::Algebraic::Derivation
+
+=head1 INTERFACE
+
+=head2 Methods
+
+=head3 C<< Data::Algebraic::Derivation::T->parse(%options, @values) >>
+
+=> C< Data::Algebraic::Derivation::T >
+
+=over
+
+=item C< $options{-derived} : [ $role_name : Str ] >
+
+C<-derived> is a arrayref cosists of role names.
+
+(optional)
+
+=item C< @values : [ $name : Str ] >
+
+C<@values> consists of names of value.
+
+=back
+
+=head3 C<< $drv->define >>
+
+=> C< () >
+
+Injects some methods into a entity class.
+
+=cut

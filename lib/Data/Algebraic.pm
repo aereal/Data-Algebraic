@@ -3,7 +3,7 @@ use 5.008001;
 use strict;
 use warnings;
 
-use Data::Algebraic::Installer::Numeral;
+use Data::Algebraic::Derivation::Numeral;
 
 our $VERSION = "0.01";
 
@@ -11,7 +11,7 @@ sub import {
   my ($class, @args) = @_;
   my ($importer) = caller();
 
-  my $installer = Data::Algebraic::Installer::Numeral->parse(
+  my $installer = Data::Algebraic::Derivation::Numeral->parse(
     -entity_class => $importer,
     @args
   );

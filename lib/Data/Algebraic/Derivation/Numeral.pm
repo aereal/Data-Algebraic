@@ -1,7 +1,7 @@
-package Data::Algebraic::Installer::Numeral;
+package Data::Algebraic::Derivation::Numeral;
 use strict;
 use warnings;
-use parent qw(Data::Algebraic::Installer::Common);
+use parent qw(Data::Algebraic::Derivation::Common);
 
 use Data::Algebraic::Util::Accessor;
 

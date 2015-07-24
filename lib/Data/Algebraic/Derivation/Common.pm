@@ -1,4 +1,4 @@
-package Data::Algebraic::Installer::Common;
+package Data::Algebraic::Derivation::Common;
 use strict;
 use warnings;
 

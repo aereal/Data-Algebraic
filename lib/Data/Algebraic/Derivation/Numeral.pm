@@ -10,13 +10,16 @@ Data::Algebraic::Util::Accessor::define_ro_accessor(__PACKAGE__, 'from');
 sub define_values {
   my ($self) = @_;
 
+  my @values;
   my $ordinal = $self->from // 1;
   for my $name (@{ $self->names }) {
     my $v = $self->create_value(name => $name, value => $ordinal);
-    $self->define_value($v);
+    push @values, $v;
     Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $name, sub { $v });
     $ordinal++;
   }
+
+  return \@values;
 }
 
 sub create_value {

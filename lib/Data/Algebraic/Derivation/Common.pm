@@ -33,9 +33,15 @@ sub define {
   Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'name');
   Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'value');
 
-  $self->define_values();
-  my $values_by_raw_value = $self->{defined_values_by_raw_value};
-  my $values = [ values %$values_by_raw_value ];
+  my $values = $self->define_values();
+  my $values_by_raw_value = {};
+
+  for my $value (@$values) {
+    $values_by_raw_value->{$value->value} = $value;
+
+    my $predicate_name = sprintf 'is_%s', lc $value->name;
+    Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $predicate_name, sub { $_[0]->is($value) });
+  }
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'is', sub {
     my ($self, $other) = @_;
@@ -48,14 +54,6 @@ sub define {
   });
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'values', sub { $values });
-}
-
-sub define_value {
-  my ($self, $value) = @_;
-  ($self->{defined_values_by_raw_value} //= {})->{$value->value} = $value;
-
-  my $predicate_name = sprintf 'is_%s', lc $value->name;
-  Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $predicate_name, sub { $_[0]->is($value) });
 }
 
 1;

@@ -53,6 +53,9 @@ sub install {
 sub define_value {
   my ($self, $value) = @_;
   ($self->{defined_values_by_raw_value} //= {})->{$value->value} = $value;
+
+  my $predicate_name = sprintf 'is_%s', lc $value->name;
+  Data::Enum::Util::Accessor::define_sub($self->entity_class, $predicate_name, sub { $_[0]->is($value) });
 }
 
 1;

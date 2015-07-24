@@ -1,11 +1,13 @@
 package Data::Algebraic::Derivation::Common;
 use strict;
 use warnings;
+use Module::Load ();
 
 use Data::Algebraic::Util::Accessor;
 
 Data::Algebraic::Util::Accessor::define_ro_accessor(__PACKAGE__, 'names');
 Data::Algebraic::Util::Accessor::define_ro_accessor(__PACKAGE__, 'entity_class');
+Data::Algebraic::Util::Accessor::define_ro_accessor(__PACKAGE__, 'derived');
 
 sub parse {
   my ($class, @args) = @_;
@@ -34,19 +36,7 @@ sub define {
   Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'value');
 
   my $values = $self->define_values();
-  my $values_by_raw_value = {};
-
-  for my $value (@$values) {
-    $values_by_raw_value->{$value->value} = $value;
-
-    my $predicate_name = sprintf 'is_%s', lc $value->name;
-    Data::Algebraic::Util::Accessor::define_sub($self->entity_class, $predicate_name, sub { $_[0]->is($value) });
-  }
-
-  Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'is', sub {
-    my ($self, $other) = @_;
-    $self->value == $other->value;
-  });
+  my $values_by_raw_value = { map { ($_->value, $_) } @$values };
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'from', sub {
     my ($class, $value) = @_;
@@ -54,6 +44,12 @@ sub define {
   });
 
   Data::Algebraic::Util::Accessor::define_sub($self->entity_class, 'values', sub { $values });
+
+  for my $role (@{ $self->derived // [] }) {
+    my $role_class = "Data::Algebraic::Role::$role";
+    Module::Load::load($role_class);
+    $role_class->assumes($self->entity_class);
+  }
 }
 
 1;

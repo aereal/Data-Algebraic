@@ -20,15 +20,9 @@ subtest 'Numeral' => sub {
   is +t::Enum::Basic::Right->name, 'Right';
   is +t::Enum::Basic::Left->value, 1;
   is +t::Enum::Basic::Right->value, 2;
-  ok +t::Enum::Basic::Left->is(t::Enum::Basic::Left);
-  ok +t::Enum::Basic::Right->is(t::Enum::Basic::Right);
-  ok +t::Enum::Basic::Left->is_left;
-  ok !t::Enum::Basic::Left->is_right;
-  ok !t::Enum::Basic::Right->is_left;
-  ok +t::Enum::Basic::Right->is_right;
 
-  ok +t::Enum::Basic->from(t::Enum::Basic::Left->value)->is(t::Enum::Basic::Left);
-  ok +t::Enum::Basic->from(t::Enum::Basic::Right->value)->is(t::Enum::Basic::Right);
+  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Left->value), t::Enum::Basic::Left;
+  is_deeply +t::Enum::Basic->from(t::Enum::Basic::Right->value), t::Enum::Basic::Right;
   is_deeply +t::Enum::Basic->values, [
     t::Enum::Basic::Left,
     t::Enum::Basic::Right,
@@ -47,6 +41,22 @@ subtest 'Numeral (with offset)' => sub {
 
   is +t::Enum::WithOffset::Left->value, 10;
   is +t::Enum::WithOffset::Right->value, 11;
+};
+
+subtest 'Eq' => sub {
+  package t::Bool {
+    use strict;
+    use warnings;
+    use Data::Algebraic (
+      -derived => [qw( Eq )],
+      qw( True False )
+    );
+  };
+
+  ok +t::Bool::True->is(t::Bool::True);
+  ok !t::Bool::True->is(t::Bool::False);
+  ok !t::Bool::False->is(t::Bool::True);
+  ok +t::Bool::False->is(t::Bool::False);
 };
 
 done_testing;

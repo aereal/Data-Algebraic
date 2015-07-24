@@ -27,7 +27,7 @@ sub parse {
   return $self;
 }
 
-sub install {
+sub define {
   my ($self) = @_;
 
   Data::Algebraic::Util::Accessor::define_ro_accessor($self->entity_class, 'name');

@@ -15,7 +15,7 @@ sub import {
     -entity_class => $importer,
     @args
   );
-  $installer->install($importer);
+  $installer->define();
 }
 
 1;

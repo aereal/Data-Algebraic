@@ -56,6 +56,11 @@ subtest 'Eq' => sub {
     );
   };
 
+  ok +t::Bool::True->is_true;
+  ok !t::Bool::True->is_false;
+  ok !t::Bool::False->is_true;
+  ok +t::Bool::False->is_false;
+
   ok +t::Bool::True->is(t::Bool::True);
   ok !t::Bool::True->is(t::Bool::False);
   ok !t::Bool::False->is(t::Bool::True);

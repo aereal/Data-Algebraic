@@ -62,6 +62,7 @@ subtest 'Eq' => sub {
   ok +t::Bool::False->is(t::Bool::False);
 
   ok !t::Bool::True->is(1);
+  ok !t::Bool::True->is(bless {}, 't');
 };
 
 done_testing;

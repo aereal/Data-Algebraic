@@ -16,13 +16,4 @@ sub define_sub {
   *{ $qualified_name } = $value;
 }
 
-sub define_scalar_var {
-  my ($dest_class, $name, $value) = @_;
-  my $qualified_name = join '::', $dest_class, $name;
-
-  no strict 'refs';
-  no warnings 'once';
-  ${ $qualified_name } = $value;
-}
-
 1;
